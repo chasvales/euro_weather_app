@@ -13,23 +13,24 @@ function convertTemp(units,type){
 }
 function convertDay(number){
 	var full_day,time_of;
-	console.log(number);
-	if(number == 00){
-		full_day = "12";
+	switch(true) {
+	  case (number == 00):
+	  	full_day = 12;
 		time_of = "AM";
-	}
-	else if(number <= 9){
-		number = Math.floor((number*.1)*10);
+	  break;
+	  case (number <= 9):
+	  	number = Math.floor((number*.1)*10);
 		full_day = number;
 		time_of = "AM";
-	}
-	else if(number >= 12){
-		full_day = number - 12;
+	  break;
+	  case (number >= 12):
+	  	full_day = number - 12;
 		time_of = "PM";
-	}
-	else{
-		full_day = number;
+	  break;
+	  default : 
+	  	full_day = number;
 		time_of = "AM";
+	  break;
 	}
 	var hour_format = full_day+' '+time_of;
 	return hour_format;
@@ -84,14 +85,9 @@ function toggleCondtions(vali){
 		},5000);
 	}
 }
-$('#app').on('swipeleft',function(event){
-	event.stopPropagation();
-	//onsole.log($('.active_city').parent().parent().next('.city_nav'));
-	$('.active_city').parent().next('a').trigger('click');
-	console.log('swipe left');
-});
-$('#app').on('swiperight',function(event){
-	event.stopPropagation();
-	$('.active_city').parent().prev('a').trigger('click');
-	console.log('swipe right');
+$(window).load(function(){
+	setTimeout(function(){
+		var forcast_init = new QueryAPI("weather","London,UK");
+		$('body').addClass('current_weather_showing');
+	},800);
 });
